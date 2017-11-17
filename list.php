@@ -68,6 +68,7 @@ if ($data['device_id'] != "") {
     $row_inbox = $statement1->fetchAll(PDO::FETCH_ASSOC);
 
     $data['inbox'] = $row_inbox;
+    $data['sql'] = $sql1;
 
 } else {
     
