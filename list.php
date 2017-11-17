@@ -67,6 +67,14 @@ if ($data['device_id'] != "") {
     $statement1->execute();
     $row_inbox = $statement1->fetchAll(PDO::FETCH_ASSOC);
 
+    foreach ($row_inbox as $k=>$v) {
+        $row_inbox[$k]['info_id'] = intval($v['info_id']);
+        $row_inbox[$k]['use_webview'] = intval($v['use_webview']);
+        $row_inbox[$k]['pinned'] = intval($v['pinned']);
+        $row_inbox[$k]['status'] = intval($v['status']);
+        $row_inbox[$k]['is_claimed'] = intval($v['is_claimed']);
+    }
+    
     $data['inbox'] = $row_inbox;
 
 } else {
