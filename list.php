@@ -42,7 +42,8 @@ if ($data['device_id'] != "") {
             
     $sql1 = "
         SELECT master_inbox.*,
-            COALESCE(inbox.device_id, :device_id) device_id
+            COALESCE(inbox.device_id, :device_id) device_id,
+            CASE WHEN inbox.device_id is null THEN 0 ELSE 1 END is_claimed
         FROM master_inbox 
         LEFT JOIN inbox 
             ON master_inbox.info_id = inbox.info_id
@@ -56,8 +57,8 @@ if ($data['device_id'] != "") {
             AND master_inbox.os IN ('All', :os)
             AND master_inbox.status = 1
             AND $filter_time
-            AND inbox.device_id IS NULL
-        ORDER BY COALESCE(valid_from, NOW()), info_id
+            AND (inbox.device_id is null OR inbox.is_deleted = 0)
+        ORDER BY pinned DESC, COALESCE(valid_from, NOW()), info_id
         LIMIT {$data['limit']}
     ";
     $statement1 = $connection->prepare($sql1);
