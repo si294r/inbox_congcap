@@ -12,10 +12,10 @@ if (trim($data['user_id']) == "") {
         "message" => "Error: user_id is empty"
     );
 }
-if (trim($data['referrer']) == "") {
+if (trim($data['promocode']) == "") {
     return array(
         "error" => 1,
-        "message" => "Error: referrer is empty"
+        "message" => "Error: promocode is empty"
     );
 }
 
