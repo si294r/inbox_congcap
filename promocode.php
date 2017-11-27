@@ -60,7 +60,7 @@ $statement1->bindParam(":os", $data['os']);
 $statement1->execute();
 $row = $statement1->fetch(PDO::FETCH_ASSOC);
 
-if (isset($row['promocode']) && $promocode == $data['promocode']) {
+if (isset($row['promocode']) && $row['promocode'] == $data['promocode']) {
     
     if ($row['promocode_count'] < $row['limit_user']) {
         
