@@ -65,7 +65,7 @@ if (isset($row['promocode']) && $row['promocode'] == $data['promocode']) {
     if ($row['promocode_count'] < $row['limit_user']) {
         
         $sql2 = "INSERT IGNORE INTO promocode_claim (promocode_id, user_id, last_update) "
-                . "VALUES (:promocode_id, user_id, NOW())";
+                . "VALUES (:promocode_id, :user_id, NOW())";
         $statement2 = $connection->prepare($sql2);
         $statement2->bindParam(":promocode_id", $row['promocode_id']);
         $statement2->bindParam(":user_id", $data['user_id']);
