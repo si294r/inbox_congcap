@@ -48,7 +48,8 @@ if ($IS_DEVELOPMENT == false) {
 }
 
 $sql1 = "SELECT promocode_id, promocode, limit_user,
-	(select count(*) from promocode_claim where promocode_id = promocode.promocode_id) as promocode_count
+	(select count(*) from promocode_claim where promocode_id = promocode.promocode_id) as promocode_count,
+	(select count(*) from promocode_claim where promocode_id = promocode.promocode_id and user_id = :user_id) as promocode_taken
     FROM promocode WHERE promocode = :promocode 
     AND os IN ('All', :os)
     AND status = 1 
@@ -57,12 +58,18 @@ $sql1 = "SELECT promocode_id, promocode, limit_user,
 $statement1 = $connection->prepare($sql1);
 $statement1->bindParam(":promocode", $data['promocode']);
 $statement1->bindParam(":os", $data['os']);
+$statement1->bindParam(":user_id", $data['user_id']);
 $statement1->execute();
 $row = $statement1->fetch(PDO::FETCH_ASSOC);
 
 if (isset($row['promocode']) && $row['promocode'] == $data['promocode']) {
-    
-    if ($row['promocode_count'] < $row['limit_user']) {
+
+    if ($row['promocode_taken'] > 0) {
+        return array(
+            "error" => 1,
+            "message" => "Error: promocode already taken"
+        );                    
+    } elseif ($row['promocode_count'] < $row['limit_user']) {
         
         $sql2 = "INSERT IGNORE INTO promocode_claim (promocode_id, user_id, last_update) "
                 . "VALUES (:promocode_id, :user_id, NOW())";
