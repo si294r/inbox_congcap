@@ -67,7 +67,7 @@ if (isset($row['promocode']) && $row['promocode'] == $data['promocode']) {
     if ($row['promocode_taken'] > 0) {
         return array(
             "error" => 1,
-            "message" => "Error: promocode already taken"
+            "message" => "Error: user already claim this promocode"
         );                    
     } elseif ($row['promocode_count'] < $row['limit_user']) {
         
@@ -97,14 +97,14 @@ if (isset($row['promocode']) && $row['promocode'] == $data['promocode']) {
         } else {
             return array(
                 "error" => 1,
-                "message" => "Error: promocode already taken"
+                "message" => "Error: user already claim this promocode"
             );            
         }
         
     } else {
         return array(
             "error" => 1,
-            "message" => "Error: promocode is not available"
+            "message" => "Error: user who claimed this promocode has reached limit"
         );
     }
     
