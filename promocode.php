@@ -62,6 +62,8 @@ $statement1->bindParam(":user_id", $data['user_id']);
 $statement1->execute();
 $row = $statement1->fetch(PDO::FETCH_ASSOC);
 
+var_dump($row);
+
 if (isset($row['promocode']) && $row['promocode'] == $data['promocode']) {
 
     if ($row['promocode_taken'] > 0) {
