@@ -55,15 +55,12 @@ $sql1 = "SELECT promocode_id, promocode, limit_user,
     AND status = 1 
     AND $filter_time
     ";
-echo $sql1;
 $statement1 = $connection->prepare($sql1);
 $statement1->bindParam(":promocode", $data['promocode']);
 $statement1->bindParam(":os", $data['os']);
 $statement1->bindParam(":user_id", $data['user_id']);
 $statement1->execute();
 $row = $statement1->fetch(PDO::FETCH_ASSOC);
-
-var_dump($row);
 
 if (isset($row['promocode']) && $row['promocode'] == $data['promocode']) {
 
