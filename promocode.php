@@ -55,6 +55,7 @@ $sql1 = "SELECT promocode_id, promocode, limit_user,
     AND status = 1 
     AND $filter_time
     ";
+echo $sql1;
 $statement1 = $connection->prepare($sql1);
 $statement1->bindParam(":promocode", $data['promocode']);
 $statement1->bindParam(":os", $data['os']);
